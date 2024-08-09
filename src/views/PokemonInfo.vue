@@ -182,7 +182,7 @@ const playAudio = () => {
 
 }
 const changeView = (id) => {
-  router.push('/pokemon/'+id)
+  router.push(`/pokemon/${id}`)
   router.go(0)
 }
 </script>
