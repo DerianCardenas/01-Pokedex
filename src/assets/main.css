@@ -1,7 +1,15 @@
 @import './base.css';
-
+html{
+  
+  background-color: #192935;
+}
 #app {
+  background-color: #192935;
   font-weight: normal;
+  height: 100vh;
+}
+body{  
+  background-color: #192935;
 }
 /* MEDIDAS DE ANCHO */
 .w-10{
