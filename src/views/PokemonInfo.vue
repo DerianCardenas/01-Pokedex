@@ -93,7 +93,7 @@
             <div class="d-flex justify-content-evenly">
               <div class="d-block" v-for="chain in pokemon?.specie?.evolution_chain?.data">
                 <div @click="changeView(chain.id)" :class="`img-container ${pokemonTypeClass} mx-auto bg-white d-flex text-dark`" style="cursor: pointer;">
-                      <img @click="changeView(chain.id)" :key="showData" :alt="chain.name" :src="chain?.sprites?.front_default" alt="" srcset="" class="w-100 p-2 mx-auto">
+                      <img :key="showData" :alt="chain.name" :src="chain?.sprites?.front_default" alt="" srcset="" class="w-100 p-2 mx-auto">
                   </div>
                   <h5 class="text-center w-100 mt-2"> {{ chain.name }} </h5>
               </div>
@@ -139,10 +139,19 @@ const pokemonTypeClass = ref("")
 const showData = ref(false)
 const options = ref(null)
 const dataChart = ref(null)
+const isRedirectioning = ref(false)
+const newId = ref(0)
 onMounted( async() => {
 
   showData.value = false
-  const {data,abilitiesComplete} = await helpers.getAllDetailsFromPokemon(props.id)
+  await getData()
+  setTimeout(() => {
+    showData.value = true
+  }, 2000);
+})
+const getData = async() =>{
+  
+  const {data,abilitiesComplete} = await helpers.getAllDetailsFromPokemon(isRedirectioning.value ? newId.value : props.id)
   console.log(data, abilitiesComplete)
   abilitiesFull.value = abilitiesComplete
   pokemon.value = data
@@ -159,10 +168,7 @@ onMounted( async() => {
     });
   });
   updatePokemonTypeClass()
-  setTimeout(() => {
-    showData.value = true
-  }, 2000);
-})
+}
 const updatePokemonTypeClass = () => {
   if (pokemon.value && pokemon.value && pokemon.value.types && pokemon.value.types[0] && pokemon.value.types[0].type) {
     const typeName = pokemon.value.types[0].type.name.toLowerCase();
@@ -181,9 +187,15 @@ const playAudio = () => {
   myAudio.play();
 
 }
-const changeView = (id) => {
-  router.push(`/pokemon/${id}`)
-  // router.go(0)
+const changeView = async (id) => {
+  showData.value = false
+  router.replace(`/pokemon/${id}`)
+  isRedirectioning.value = true
+  newId.value = id
+  await getData()
+  setTimeout(() => {
+    showData.value = true
+  }, 2000);
 }
 </script>
 <style lang="scss">
