@@ -4,7 +4,7 @@
         <img :src="props.pokemon?.details?.sprites?.other['official-artwork']?.front_shiny" alt="" srcset="" class="w-50 img-2">
         <h5> {{ props.pokemon.name.toUpperCase() }} </h5>
         <h6> # {{ helpers.formatToFourDigits(props.pokemon?.details?.id) }} </h6>
-        <div class="cont-types  d-flex text-center justify-content-evenly">
+        <div class="cont-types col d-flex flex-wrap text-center justify-content-evenly">
             <div v-for="type in props.pokemon?.details?.types" :class="`rounded-card mx-auto text-center px-2 my-2 ${pokemonTypeItem(type.type)}`">
                 {{ type.type.name.toString().toUpperCase() }}
             </div>

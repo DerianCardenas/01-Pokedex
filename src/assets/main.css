@@ -11,6 +11,16 @@ html{
 body{  
   background-color: #192935;
 }
+.col-sm-12{
+  @media screen and (max-width:500px){
+    width: 100% !important;
+  }
+}
+.col-sm-6{
+  @media screen and (max-width:500px){
+    width: 50% !important;
+  }
+}
 /* MEDIDAS DE ANCHO */
 .w-10{
   width: 10%;

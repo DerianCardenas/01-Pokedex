@@ -1,107 +1,107 @@
 <template>
     <PokeballSpinner v-if="!showData" class="w-100" />
     <div v-if="showData">
-      <Card class="border-danger border w-75 mx-auto my-4 flex-wrap" style="border-width: 5px;">
-        <Card id="profile" class="col-6 d-block p-2">
-            <div class="d-block w-100">
-              <div id="data" class="w-100 mx-auto justify-content-evenly text-center d-flex">
-                <h5> {{ pokemon?.name?.toUpperCase() }} </h5>
-                <h5> # {{ helpers.formatToFourDigits(pokemon?.id) }} </h5>
-              </div>
-              <div class="d-flex w-100">
-                <div @click="playAudio" :class="`img-container ${pokemonTypeClass} mx-auto bg-white d-flex text-dark`">
-                    <img :key="showData" :src="pokemon?.sprites?.other['official-artwork']?.front_default" alt="" srcset="" class="w-100 p-2 mx-auto">
+        <Card class="border-danger border w-75 mx-auto my-4 flex-wrap" style="border-width: 5px;">
+          <Card id="profile" class="col-6 col-sm-12 d-block p-2">
+              <div class="d-block w-100">
+                <div id="data" class="w-100 mx-auto justify-content-evenly text-center d-flex">
+                  <h5> {{ pokemon?.name?.toUpperCase() }} </h5>
+                  <h5> # {{ helpers.formatToFourDigits(pokemon?.id) }} </h5>
                 </div>
-                <audio id="cry" :src="pokemon?.cries?.latest"></audio>
-              </div>
-              <div class="d-flex">
-                <div class="d-block col-12">
-                  <div class="d-flex text-center justify-content-evenly my-3 col-12">
-                    <div v-for="type in pokemon?.types" :class="`rounded-pill text-center px-2 ${pokemonTypeItem(type.type)}`">
-                        {{ type.type.name.toString().toUpperCase() }}
+                <div class="d-flex w-100">
+                  <div @click="playAudio" :class="`img-container ${pokemonTypeClass} mx-auto bg-white d-flex text-dark`">
+                      <img :key="showData" :src="pokemon?.sprites?.other['official-artwork']?.front_default" alt="" srcset="" class="w-100 p-2 mx-auto">
+                  </div>
+                  <audio id="cry" :src="pokemon?.cries?.latest"></audio>
+                </div>
+                <div class="d-flex">
+                  <div class="d-block col-12">
+                    <div class="d-flex text-center justify-content-evenly my-3 col-12">
+                      <div v-for="type in pokemon?.types" :class="`rounded-pill text-center px-2 ${pokemonTypeItem(type.type)}`">
+                          {{ type.type.name.toString().toUpperCase() }}
+                      </div>
+                    </div>
+                    <div class="d-flex text-center justify-content-evenly my-3 col-12 flex-wrap">
+                      <span class="col-6 col-sm-12"> <strong>
+                        Weight: {{ (pokemon.weight / 10).toFixed(2) }} kg
+                      </strong> .</span>
+                      <span class="col-6 col-sm-12"> <strong>
+                        Height: {{ (pokemon.height / 10).toFixed(2) }} mts.
+                      </strong> </span>
+                      <span class="col-6 mt-3 col-sm-12"> <strong>
+                        Base hapiness: {{ pokemon?.specie?.base_happiness }}
+                      </strong> .</span>
+                      <span class="col-6 mt-3 col-sm-12"> <strong>
+                        Capture rate: {{ pokemon?.specie?.capture_rate }} %
+                      </strong> </span>
                     </div>
                   </div>
-                  <div class="d-flex text-center justify-content-evenly my-3 col-12 flex-wrap">
-                    <span class="col-6"> <strong>
-                      Weight: {{ (pokemon.weight / 10).toFixed(2) }} kg
-                    </strong> .</span>
-                    <span class="col-6"> <strong>
-                      Height: {{ (pokemon.height / 10).toFixed(2) }} mts.
-                    </strong> </span>
-                    <span class="col-6 mt-3"> <strong>
-                      Base hapiness: {{ pokemon?.specie?.base_happiness }}
-                    </strong> .</span>
-                    <span class="col-6 mt-3"> <strong>
-                      Capture rate: {{ pokemon?.specie?.capture_rate }} %
-                    </strong> </span>
-                  </div>
                 </div>
               </div>
-            </div>
-        </Card>
-        <Card class="col-6 p-2">
-            <div  id="stats" class="w-100">
-                <PolarArea v-if="showData" :data="dataChart" :options="options" />
-            </div>
-        </Card>
-        <Card class="col-12 p-4">
-          <div class="d-block col-6">
-            <h5 class="w-100 text-center">Abilities:</h5>
-            <div class="d-flex w-100 flex-wrap">
-              <div 
-                v-for="(abilityGroup, idx) in abilitiesFull" 
-                :key="idx"
-                :id="`carouselExampleControls-${idx}`"
-                class="carousel carousel-dark slide col-6" 
-                data-bs-ride="carousel"
-              >
-                <h5 class="w-100 text-center"> <strong class="w-100">{{ helpers.getAbilityName(pokemon?.abilities[idx]?.ability?.name) }}</strong> </h5>
-                <div class="carousel-inner mx-auto text-center">
-                  <div
-                    v-for="(abilityFull, index) in abilityGroup"
-                    :key="index"
-                    :class="['carousel-item', { active: index === 0 }]"
+          </Card>
+          <Card class="col-6 col-sm-12 p-2">
+              <div  id="stats" class="w-100">
+                  <PolarArea v-if="showData" :data="dataChart" :options="options" />
+              </div>
+          </Card>
+          <Card class="col-12 flex-wrap p-4">
+            <div class="d-block col-6 col-sm-12">
+              <h5 class="w-100 text-center">Abilities:</h5>
+              <div class="d-flex w-100 flex-wrap">
+                <div 
+                  v-for="(abilityGroup, idx) in abilitiesFull" 
+                  :key="idx"
+                  :id="`carouselExampleControls-${idx}`"
+                  class="carousel carousel-dark slide col-6" 
+                  data-bs-ride="carousel"
+                >
+                  <h5 class="w-100 text-center"> <strong class="w-100">{{ helpers.getAbilityName(pokemon?.abilities[idx]?.ability?.name) }}</strong> </h5>
+                  <div class="carousel-inner mx-auto text-center">
+                    <div
+                      v-for="(abilityFull, index) in abilityGroup"
+                      :key="index"
+                      :class="['carousel-item', { active: index === 0 }]"
+                    >
+                      <div class="d-block w-75 mx-auto">
+                        <p>{{ abilityFull ? abilityFull.flavor_text : '' }} <br> {{ abilityFull ? abilityFull?.version_group?.name.split('-').join(' ') : '' }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <button 
+                    class="carousel-control-prev" 
+                    type="button" 
+                    :data-bs-target="`#carouselExampleControls-${idx}`" 
+                    data-bs-slide="prev"
                   >
-                    <div class="d-block w-75 mx-auto">
-                      <p>{{ abilityFull ? abilityFull.flavor_text : '' }} <br> {{ abilityFull ? abilityFull?.version_group?.name.split('-').join(' ') : '' }}</p>
-                    </div>
-                  </div>
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button 
+                    class="carousel-control-next" 
+                    type="button" 
+                    :data-bs-target="`#carouselExampleControls-${idx}`" 
+                    data-bs-slide="next"
+                  >
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
                 </div>
-                <button 
-                  class="carousel-control-prev" 
-                  type="button" 
-                  :data-bs-target="`#carouselExampleControls-${idx}`" 
-                  data-bs-slide="prev"
-                >
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                <button 
-                  class="carousel-control-next" 
-                  type="button" 
-                  :data-bs-target="`#carouselExampleControls-${idx}`" 
-                  data-bs-slide="next"
-                >
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
               </div>
             </div>
-          </div>
-          <div class="d-block col-6">
-            <h5 class="w-100 text-center">Evolution chain:</h5>
-            <div class="d-flex justify-content-evenly">
-              <div class="d-block" v-for="chain in pokemon?.specie?.evolution_chain?.data">
-                <div @click="changeView(chain.id)" :class="`img-container ${pokemonTypeClass} mx-auto bg-white d-flex text-dark`" style="cursor: pointer;">
-                      <img :key="showData" :alt="chain.name" :src="chain?.sprites?.front_default" alt="" srcset="" class="w-100 p-2 mx-auto">
-                  </div>
-                  <h5 class="text-center w-100 mt-2"> {{ chain.name }} </h5>
+            <div class="d-block col-6 col-sm-12">
+              <h5 class="w-100 text-center">Evolution chain:</h5>
+              <div class="d-flex justify-content-evenly flex-wrap">
+                <div class="d-block col-sm-12" v-for="chain in pokemon?.specie?.evolution_chain?.data">
+                  <div @click="changeView(chain.id)" :class="`img-container ${pokemonTypeClass} mx-auto bg-white d-flex text-dark`" style="cursor: pointer;">
+                        <img :key="showData" :alt="chain.name" :src="chain?.sprites?.front_default" alt="" srcset="" class="w-100 p-2 mx-auto">
+                    </div>
+                    <h5 class="text-center w-100 mt-2"> {{ chain.name }} </h5>
+                </div>
               </div>
             </div>
-          </div>
+          </Card>
         </Card>
-        </Card>
-        <div style="cursor: pointer;" @click="router.push('/')" class="m-5 bg-danger mx-auto d-flex w-20 pt-2 rounded-pill text-white">
+        <div style="cursor: pointer;" @click="router.push('/')" class="m-5 col-sm-6 bg-danger mx-auto d-flex w-20 pt-2 rounded-pill text-white">
           <p class="mx-auto">
             <FontAwesomeIcon class=" px-1 " :icon="faArrowRotateLeft" />
             <strong class="ms-2">  Return to Pokedex</strong>
