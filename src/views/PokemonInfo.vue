@@ -21,11 +21,11 @@
                           {{ type.type.name.toString().toUpperCase() }}
                       </div>
                     </div>
-                    <div class="d-flex text-center justify-content-evenly my-3 col-12 flex-wrap">
-                      <span class="col-6 col-sm-12"> <strong>
+                    <div class="d-flex text-center justify-content-evenly mb-3 col-12 flex-wrap">
+                      <span class="col-6 mt-3 col-sm-12"> <strong>
                         Weight: {{ (pokemon.weight / 10).toFixed(2) }} kg
                       </strong> .</span>
-                      <span class="col-6 col-sm-12"> <strong>
+                      <span class="col-6 mt-3 col-sm-12"> <strong>
                         Height: {{ (pokemon.height / 10).toFixed(2) }} mts.
                       </strong> </span>
                       <span class="col-6 mt-3 col-sm-12"> <strong>
@@ -91,7 +91,7 @@
             <div class="d-block col-6 col-sm-12">
               <h5 class="w-100 text-center">Evolution chain:</h5>
               <div class="d-flex justify-content-evenly flex-wrap">
-                <div class="d-block col-sm-12" v-for="chain in pokemon?.specie?.evolution_chain?.data">
+                <div class="chain-item" v-for="chain in pokemon?.specie?.evolution_chain?.data">
                   <div @click="changeView(chain.id)" :class="`img-container ${pokemonTypeClass} mx-auto bg-white d-flex text-dark`" style="cursor: pointer;">
                         <img :key="showData" :alt="chain.name" :src="chain?.sprites?.front_default" alt="" srcset="" class="w-100 p-2 mx-auto">
                     </div>
@@ -150,9 +150,28 @@ onMounted( async() => {
   }, 2000);
 })
 const getData = async() =>{
-  
-  const {data,abilitiesComplete} = await helpers.getAllDetailsFromPokemon(isRedirectioning.value ? newId.value : props.id)
+  var searchData = ""
+  if(!isRedirectioning.value){
+    console.log(typeof props.id )
+    if (typeof props.id === 'string') {
+      if (/^[a-zA-Z]+$/.test(props.id)) {
+        searchData = props.id.toString().toLowerCase();
+      } else if(/^[0-9]+$/.test(props.id)){
+        searchData = props.id
+      } else {
+        router.push('/')
+      }
+    } else if (typeof props.id === 'number') {
+      searchData = props.id
+    }else {
+      router.push('/')
+    }
+  }
+  const {data,abilitiesComplete} = await helpers.getAllDetailsFromPokemon(isRedirectioning.value ? newId.value : searchData)
   console.log(data, abilitiesComplete)
+  if(data == null){
+    router.push("/notfound")
+  }
   abilitiesFull.value = abilitiesComplete
   pokemon.value = data
   const chartData = helpers.getDataForPolarChart(pokemon.value)

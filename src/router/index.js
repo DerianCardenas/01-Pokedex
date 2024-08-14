@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import PokemonInfo from '../views/PokemonInfo.vue'
+import NotFound from '@/views/NotFound.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,6 +16,11 @@ const router = createRouter({
       name: 'pokemon',
       component: PokemonInfo,
       props:true
+    },
+    {
+      path: '/notfound',
+      name: 'NotFound',
+      component: NotFound,
     },
     // {
     //   path: '/about',

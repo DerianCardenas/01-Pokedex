@@ -1,7 +1,7 @@
 <template>
     <PokeballSpinner v-if="!showCards" class="w-100" />
-    <div @scroll="handleDebouncedScroll" v-if="showCards" class="d-flex flex-wrap w-90 mx-auto">
-        <div v-for="pokemon in list_all" :key="showCards" class="col-lg-2 col-6 px-2 my-2" > 
+    <div @scroll="handleDebouncedScroll" v-if="showCards" class="d-flex flex-wrap w-100 justify-content-evenly">
+        <div v-for="pokemon in list_all" :key="showCards" class="col-lg-2 col-sm-6 my-2" > 
             <PokemonCardList :pokemon="pokemon" :key="pokemon"/>
         </div>
     </div>
