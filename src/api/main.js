@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useRouter } from "vue-router";
+const router = useRouter()
 const baseUrl = 'https://pokeapi.co/api/v2/'
 const getPaginatedPokemon =  async (offset,limit) => {
     try{
@@ -14,8 +16,7 @@ const getDetailedPokemon = async (search) => {
         const resp = await axios.get(baseUrl + 'pokemon/'+search)
         return resp;
     }catch(error){
-        console.log(Object.entries(error));
-        return null;
+        return {data:null};
     }
 }
 const getUrl = async (url) =>{
@@ -23,7 +24,6 @@ const getUrl = async (url) =>{
         const resp = await axios.get(url)
         return resp;
     }catch(error){
-        console.log(Object.entries(error));
         return null;
     }
 }

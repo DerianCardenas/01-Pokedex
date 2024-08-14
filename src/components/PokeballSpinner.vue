@@ -17,6 +17,9 @@
   padding-left: 25%;
   height: 100vh;
   overflow: hidden;
+  @media screen and (max-width:500px){
+    padding-left: 0% !important;
+  }
 }
 
 .ball {

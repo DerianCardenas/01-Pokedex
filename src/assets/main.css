@@ -1,7 +1,41 @@
 @import './base.css';
-
+html{
+  
+  background-color: #192935;
+}
 #app {
+  background-color: #192935;
   font-weight: normal;
+  height: 100vh;
+}
+body{  
+  background-color: #192935;
+}
+.chain-item{
+  display: block;
+  @media screen and (max-width:500px){
+    width: 100% !important;
+  }
+}
+/* MEDIDAS DE COLUMNAS */
+.col-lg-2{
+  width: 15% !important;
+  @media screen and (max-width :900px){
+    width: 15% !important;
+  }
+}
+.col-6{
+  width: 50% !important;
+}
+.col-sm-6{
+  @media screen and (max-width :500px){
+    width: 50% !important;
+  }
+}
+.col-sm-12{
+  @media screen and (max-width:500px){
+    width: 100% !important;
+  }
 }
 /* MEDIDAS DE ANCHO */
 .w-10{

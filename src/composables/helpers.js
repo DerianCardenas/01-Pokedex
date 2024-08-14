@@ -95,6 +95,8 @@ const getEvolutionChainFull = async (chain) => {
 const getAllDetailsFromPokemon = async(id) => {
   var abilitiesComplete = []
   const {data} = await main.getDetailedPokemon(id)
+  if(data == null)
+    return {data:null,abilitiesComplete:null};
   data.abilities.map(async ability=> {
     const link = ability.ability.url
     const response = await main.getUrl(link)
